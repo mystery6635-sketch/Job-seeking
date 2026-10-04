@@ -5,6 +5,12 @@ argument-hint: "[Task ID …] (비우면 전체)"
 
 `jobfit-project-pipeline` Skill의 규칙을 따라 Task 상세 파일을 생성한다. 대상: $ARGUMENTS (비우면 전체)
 
+공통 규칙
+- `jobfit-project-pipeline` Skill을 사용한다.
+- 실제 파일을 읽는다(`TASKS/00_TASK_LIST.md`, 근거 문서, 생성된 `TASKS/TASK-*.md`).
+- 구현 코드를 만들지 않는다(문서만 작성).
+- Task Audit 실패를 무시하지 않는다. 실패하면 완료로 보고하지 않는다.
+
 1. `TASKS/00_TASK_LIST.md`가 없으면 `/gen-tasklist`를 먼저 실행하라고 안내하고 중단한다.
 2. `python scripts/gen_task_details.py`(대상 지정 시 `--only <ID …>`)를 실행한다. 스크립트가 구현 Task ID를 Seq 순서로 읽고 중복 ID·빈 필수 열·존재하지 않는 Depends On을 먼저 검사한다. 실패하면 파일을 만들지 않으므로 `00_TASK_LIST.md`를 고친 뒤 다시 실행한다.
 3. 각 구현 Task는 `TASKS/TASK-<ID>.md`로 생성하거나 갱신한다. 같은 ID 파일이 있으면 덮어쓰며 중복 파일을 만들지 않는다. EXCLUDED 행은 파일을 만들지 않는다.

@@ -47,7 +47,7 @@ v1 MVP 범위(`docs/PROJECT_SCOPE.md` §1~§3)를 따른다. 로그인·관리�
 ## Functional AC
 
 1. Next.js 구현 전 `node_modules/next/dist/docs/` 관련 문서 확인(AGENTS.md)
-2. `result_id`와 희망 직무는 브라우저 `sessionStorage`에만 보관한다(탭 세션 단위, 계정·인증 쿠키 없음). 저장 방식은 SRS에 명시가 없어 가정으로 기록한다(§가정 A-01)
+2. `result_id`만 브라우저 `sessionStorage`에 보관한다(탭 세션 단위, 계정·인증 쿠키 없음. 희망 직무는 DB에서 조회). 저장 방식은 SRS에 명시가 없어 가정으로 기록한다(§가정 A-01)
 3. `DiagnosisGuard`는 `result_id`가 없거나 서버 조회가 404이면 `먼저 진단을 완료해주세요` WarningAlert와 SCR-001 이동 CTA를 보여주고 자식 콘텐츠를 렌더링하지 않는다
 4. `sessionStorage` 접근 실패(try/catch) 시에도 Guard 상태로 안전하게 전환한다
 
@@ -57,7 +57,7 @@ v1 MVP 범위(`docs/PROJECT_SCOPE.md` §1~§3)를 따른다. 로그인·관리�
 
 ## Security/Privacy AC
 
-1. `sessionStorage` 값은 `result_id`·희망 직무뿐이며 학력·경력·자격증 원문을 저장하지 않는다
+1. `sessionStorage` 값은 `result_id`뿐이며 학력·경력·자격증·희망 직무 원문을 저장하지 않는다
 
 ## Test Cases
 

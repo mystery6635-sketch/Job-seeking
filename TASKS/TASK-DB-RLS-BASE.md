@@ -45,7 +45,7 @@ v1 MVP 범위(`docs/PROJECT_SCOPE.md` §1~§3)를 따른다. 로그인·관리�
 
 ## Functional AC
 
-1. 4개 테이블 모두 RLS를 활성화하고 `anon`·`authenticated` 정책을 만들지 않는다(서버 전용 service key로만 접근)
+1. 관리형 DB는 Supabase다(D-04 확정). 4개 테이블 모두 RLS를 활성화하고 `anon`·`authenticated` 정책을 만들지 않는다(서버 전용 service key로만 접근, PROJECT_SCOPE §6.2)
 2. `.env.example`에 필요한 환경변수 이름만 기록한다(값 없음)
 
 ## Visual AC
@@ -82,5 +82,5 @@ v1 MVP 범위(`docs/PROJECT_SCOPE.md` §1~§3)를 따른다. 로그인·관리�
 - 자동 Merge·EC2·AWS 설정 추가 금지
 - 구현 코드·Branch·Commit을 이 문서 작업으로 만들지 않는다
 - 4개 테이블 밖의 테이블·계정·결제 테이블 추가 금지
-- 희망 직무 컬럼(`desired_job`)은 결정 D-02 전까지 추가 금지
+- 희망 직무(`desired_job`) 외 입력 컬럼 추가 금지(결정 D-02)
 - `priority_order` 사용 로직 금지

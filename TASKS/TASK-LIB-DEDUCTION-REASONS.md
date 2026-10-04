@@ -48,7 +48,7 @@ v1 MVP 범위(`docs/PROJECT_SCOPE.md` §1~§3)를 따른다. 로그인·관리�
 
 1. `buildDeductionItems(score)`는 학력·경력·자격증·스킬 4개 카테고리 항목을 항상 반환하고 각 항목은 `status`(`감점 있음`/`감점 없음`)와 감점 있음일 때 비어 있지 않은 `reason_text`를 가진다
 2. 만점 카테고리는 `감점 없음`으로 구분한다(감점 근거 최소 3개 항목 표시 요건 충족)
-3. 사유 도출 규칙은 OQ-13 결정을 따르며 룰 테이블(`scoring-rules.ts`)에서만 읽는다
+3. 감점 = 25 − 카테고리 획득 점수이며, 사유 문장은 구간표의 다음 구간 기준을 안내하는 룰 표(`scoring-rules.ts`) 문장으로만 만든다(OQ-13 확정, PROJECT_SCOPE §6.1)
 
 ## Visual AC
 

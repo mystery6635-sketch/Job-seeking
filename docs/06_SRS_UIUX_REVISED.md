@@ -382,6 +382,7 @@ sequenceDiagram
 | career | 문자열/기간 (형식 미정) | 필수 | PRD §5 |
 | certifications | 목록 (형식 미정) | 선택(없으면 "없음") | PRD §5 (2026-09-19 수정) |
 | skills | 목록 (형식 미정) | 선택(없으면 "없음") | PRD §5 (2026-09-19 수정) |
+| desired_job | 문자열 | 선택(없으면 REQ-FUNC-JOBLINK-002 분기) | 결정 D-02 (2026-10-04) — DB 저장 |
 | submitted_at | 일시 | 필수 | 논리적 필요 |
 
 - **보존·삭제 정책(v1)**: 정식 자동화 정책은 [결정 필요](§7 OQ-10). **v1 임시 방침**: 정책 확정 전까지 운영자가 수동으로 주기 점검·삭제 (REQ-NFR-PRIV-002 참조).
@@ -401,6 +402,7 @@ erDiagram
         string career
         string certifications "선택: 없으면 '없음'"
         string skills "선택: 없으면 '없음'"
+        string desired_job "선택"
         datetime submitted_at
     }
     DiagnosisResult {
@@ -830,19 +832,19 @@ PRD 전체에 근거 없음. 요구사항 미작성 — §7 Open Questions(OQ-01
 | OQ-05 | 개인화 알고리즘 전용 KPI는 무엇인가? | REQ-FUNC-PERSONALIZE-* | Post-MVP 재검토 시 정의 |
 | OQ-06 | 경력단절여성·중장년 세그먼트에서 Pain/Job 검증 여부 | PRD §2 Assumptions | 미검증 상태로 출시(리스크 인지) |
 | OQ-07 | 사회적 Job 기반 User Story가 존재하는가? | PRD §3 | 미정 |
-| OQ-08 | 진단 점수 산출 로직(가중치)은 무엇인가? | REQ-FUNC-DIAG-001 | 출시 전 확정 필수(Release Blocking) |
+| OQ-08 | 진단 점수 산출 로직(가중치)은 무엇인가? | REQ-FUNC-DIAG-001 | 확정(2026-10-04): 4개 카테고리(학력·경력·자격증·스킬) 균등 25점 만점, 구간표는 `docs/PROJECT_SCOPE.md` §6.1. 나이는 점수에 반영하지 않음 |
 | OQ-09 | "AOS/DOS 게이트 통과 절차"의 구체적 기준은? | REQ-FUNC-PERSONALIZE-* | Post-MVP 재추진 시 확정 |
 | OQ-10 | 데이터 재조회·수정·삭제·보존 기간 정책은? | REQ-FUNC-DIAG-*, REQ-NFR-PRIV-002 | v1은 수동 삭제 프로세스로 임시 대응 |
 | OQ-11 | 자격증·훈련 매핑 데이터의 정식 구조·출처·갱신 프로세스는? | REQ-FUNC-RECO-001 | v1은 하드코딩 Dummy로 확정, 정식화는 Post-MVP |
 | OQ-12 | REQ-FUNC-RECO-001의 제안 AC를 PRD에 정식 반영할 것인가? | REQ-FUNC-RECO-001 | PO 승인으로 v1 임시 채택, **정식 PRD 개정 권고** |
-| OQ-13 | 감점 사유 도출 알고리즘은 무엇인가? | REQ-FUNC-SCORE-001 | 출시 전 확정 필수(Release Blocking) |
+| OQ-13 | 감점 사유 도출 알고리즘은 무엇인가? | REQ-FUNC-SCORE-001 | 확정(2026-10-04): 감점 = 카테고리 만점(25) − 획득 점수. 감점 사유는 구간표의 다음 구간 기준을 안내하는 룰 표 문장(`docs/PROJECT_SCOPE.md` §6.1) |
 | OQ-14 | 5초 초과 시 처리(타임아웃 UX)는? | REQ-NFR-PERF-001 | 미정 |
 | OQ-15 | 베타 가동률 측정 방식·다운타임 정의·미달 시 대응은? | REQ-NFR-AVAIL-001 | 미정(Dummy 모니터링 권고만 존재) |
-| OQ-16 | 암호화 알고리즘·키 관리·접근 제어 상세는? | REQ-NFR-SEC-001/002 | 출시 전 확정 필수(Release Blocking) |
+| OQ-16 | 암호화 알고리즘·키 관리·접근 제어 상세는? | REQ-NFR-SEC-001/002 | 확정(2026-10-04): 관리형 DB는 Supabase. 저장 암호화는 플랫폼 기본값, 접근 제어는 전 테이블 RLS 활성화(anon·authenticated 정책 없음)+서버 전용 service key(`docs/PROJECT_SCOPE.md` §6.2) |
 | OQ-17 | 채점/매핑 규칙 변경 시 재현성 처리 방식은? | REQ-FUNC-DIAG-003 | 미정 |
 | OQ-18 | 오류 응답 스키마(코드 체계)는? | §6.1 | 설계 제안 단계 |
 | OQ-19 | 감사 로그 기록 항목·보존 기간은? | REQ-NFR-SEC-003 | v1은 호스팅 기본 로그로 대체, 정식화는 Post-MVP |
-| OQ-20 | 개인정보 보존기간 수치는 얼마인가? | REQ-NFR-PRIV-002 | 출시 전 확정 권고(Release Blocking 후보, §8 참조) |
+| OQ-20 | 개인정보 보존기간 수치는 얼마인가? | REQ-NFR-PRIV-002 | 확정(2026-10-04): 진단 입력·결과 보존기간 90일. 경과분은 운영자가 수동 삭제(자동 삭제는 Post-MVP) |
 | OQ-21 | KPI 로깅 기록 항목·세션 식별 방식은? | REQ-NFR-OBS-001 | v1은 무료 분석 도구 기본 기능으로 대체 |
 | OQ-22 | 진단 중복 제출의 서버 측 정식 처리(멱등키 등)는 필요한가? | REQ-FUNC-DIAG-004 | v1은 클라이언트 버튼 비활성화로 충분한 것으로 잠정 결론, 트래픽 증가 시 재검토 |
 | OQ-23 | MBTI 기반 직무 수행 태도 보조 지표(REQ-FUNC-ATTITUDE-*)를 PRD §5에 정식 기능으로 반영할 것인가, 아니면 v1 한정 임시 편입으로 유지할 것인가? | REQ-FUNC-ATTITUDE-001~002 | PO 승인 없이 사용자 요청으로 v1 편입. PRD §4 차별화 문구("성향이 아니라 근거 있는 점수")와의 정합성 재검토 필요(Release Blocking 아님, 포지셔닝 리스크로 추적) |
@@ -918,3 +920,4 @@ MVP v1을 정식 출시(베타 공개)하기 위해 아래 조건을 모두 충�
 | v1.0 | 2026-09-19 | (05판) 재검토 표(구현·운영 가능성) 전체 승인 반영. 개인화 알고리즘 Post-MVP 이연, DIAG-004/RECO-001/SEC-003/OBS-001 v1 축소·Dummy 구현 확정, AVAIL-001/PRIV-002 정책 결정 필요 유지, DoD·MVP Release Criteria 신규 작성 |
 | v1.1 | 2026-09-19 | (06판) `05_SRS_Travel_v1.md` 구조 참조하여 문서 표준 헤더, References, Stakeholder 권한 매트릭스(§2.2), System Context/아키텍처 다이어그램·기술 스택·라우트 인벤토리·Use Case 표(§3), Sequence Diagram 2종(§3.8), Appendix API 표(§6.1) 신규 추가. 요구사항 내용(§4)은 05판 그대로 승계, 변경·삭제 없음 |
 | v1.2 | 2026-10-03 | UI/UX 승인 Screen(SCR-001~005) 반영. 공개 Route를 5개 Screen으로 통합(`/diagnosis/result/reasons` → SCR-002 Drawer), UI Route Contract(§3.6.1~3.6.3), Requirement-Screen 연결(§5.3), UI Release Acceptance Criteria(§9.5) 추가. Requirement 삭제·문구 변경 없음 |
+| v1.3 | 2026-10-04 | 미해결 결정 확정 반영: OQ-08·OQ-13(채점·감점 규칙), OQ-16(Supabase·RLS), OQ-20(보존 90일), 희망 직무 DB 저장(DiagnosisInput `desired_job`, D-02). Requirement 삭제·문구 변경 없음 |

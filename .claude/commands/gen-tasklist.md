@@ -5,6 +5,12 @@ argument-hint: "[추가 지시]"
 
 `jobfit-project-pipeline` Skill의 규칙을 따라 `TASKS/00_TASK_LIST.md`를 생성한다. 추가 지시: $ARGUMENTS
 
+공통 규칙
+- `jobfit-project-pipeline` Skill을 사용한다.
+- 문서를 기억에 의존하지 않고 실제 파일을 읽는다(입력 문서, `package.json`, `src/app` 파일 트리).
+- 구현 코드를 만들지 않는다(문서만 작성).
+- Task Audit 실패를 무시하지 않는다. 실패하면 완료로 보고하지 않는다.
+
 1. `python scripts/validate_inputs.py`를 실행한다. 실패하면 오류를 보고하고 Task List를 만들지 않는다.
 2. Skill의 입력 파일을 읽는다. `src/app` 실제 파일 트리와 `package.json`도 확인한다.
 3. `TASKS/` 폴더가 없으면 만들고 `TASKS/00_TASK_LIST.md` 하나만 작성한다(구현 코드·Branch·Commit·Issue 금지). 문서 구성은 Skill의 "00_TASK_LIST.md 형식"을 따른다.

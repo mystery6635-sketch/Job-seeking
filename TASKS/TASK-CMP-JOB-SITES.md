@@ -63,6 +63,7 @@ v1 MVP 범위(`docs/PROJECT_SCOPE.md` §1~§3)를 따른다. 로그인·관리�
 ## Security/Privacy AC
 
 1. 외부 링크 `rel` 누락 금지, 공고 feed·랭킹·로고 이미지 금지
+2. 외부 사이트 URL에는 희망 직무 검색어만 담고 학력·경력 등 다른 입력은 보내지 않으며, 외부 이동·클릭 기록을 서버·DB에 저장하지 않는다
 
 ## Test Cases
 

@@ -48,7 +48,7 @@ v1 MVP 범위(`docs/PROJECT_SCOPE.md` §1~§3)를 따른다. 로그인·관리�
 
 1. `diagnosis_inputs`, `diagnosis_results`, `deduction_items`, `recommendation_items` 4개 테이블만 만든다(SRS §4.2.2 ER 기준)
 2. `result_id`는 추측 불가능한 UUID로 정의한다
-3. 계정·사용자·결제·관리자 테이블과 `priority_order` 사용 로직을 만들지 않는다. 희망 직무 컬럼은 D-02 결정 전까지 추가하지 않는다
+3. 계정·사용자·결제·관리자 테이블과 `priority_order` 사용 로직을 만들지 않는다. `diagnosis_inputs`에 선택 컬럼 `desired_job`(text, null 허용)을 둔다(D-02 확정). 테이블은 4개를 유지한다
 
 ## Visual AC
 
@@ -57,7 +57,7 @@ v1 MVP 범위(`docs/PROJECT_SCOPE.md` §1~§3)를 따른다. 로그인·관리�
 ## Security/Privacy AC
 
 1. 관리형 DB의 기본 저장 암호화를 사용하고 커스텀 암호화 계층을 만들지 않는다(설정 확인은 `MANUAL-LOGS-OBS`)
-2. 학력·경력·자격증·skill 컬럼 외 개인정보 컬럼을 만들지 않는다
+2. 학력·나이·경력·자격증·skill·희망 직무 컬럼 외 개인정보 컬럼을 만들지 않는다
 
 ## Test Cases
 
@@ -85,5 +85,5 @@ v1 MVP 범위(`docs/PROJECT_SCOPE.md` §1~§3)를 따른다. 로그인·관리�
 - 자동 Merge·EC2·AWS 설정 추가 금지
 - 구현 코드·Branch·Commit을 이 문서 작업으로 만들지 않는다
 - 4개 테이블 밖의 테이블·계정·결제 테이블 추가 금지
-- 희망 직무 컬럼(`desired_job`)은 결정 D-02 전까지 추가 금지
+- 희망 직무(`desired_job`) 외 입력 컬럼 추가 금지(결정 D-02)
 - `priority_order` 사용 로직 금지

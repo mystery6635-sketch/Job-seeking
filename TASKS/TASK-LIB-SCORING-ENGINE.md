@@ -50,7 +50,7 @@ v1 MVP 범위(`docs/PROJECT_SCOPE.md` §1~§3)를 따른다. 로그인·관리�
 ## Functional AC
 
 1. `computeScore(input)`은 시간·난수·외부 호출 없는 순수 함수이며 동일 입력에 항상 동일한 0~100 정수 점수와 카테고리별 점수를 반환한다
-2. 가중치·감점 규칙은 `src/data/scoring-rules.ts` 룰 테이블 한 곳에 둔다. 가중치 수치는 OQ-08(Release Blocking) 결정값으로만 채우고 결정 전에는 임의 값을 확정하지 않는다(§블로킹 결정 D-01)
+2. 4개 카테고리(학력·경력·자격증·스킬)를 균등 25점 만점으로 계산하고 총점은 합(0~100)이다. 구간표 값은 `docs/PROJECT_SCOPE.md` §6.1(OQ-08 확정)을 `src/data/scoring-rules.ts` 한 곳에 그대로 옮긴다. 나이는 점수에 반영하지 않는다
 3. 동기·경량 함수로 구현해 5초 목표를 위협하지 않는다
 
 ## Visual AC

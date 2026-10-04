@@ -48,7 +48,7 @@ v1 MVP 범위(`docs/PROJECT_SCOPE.md` §1~§3)를 따른다. 로그인·관리�
 ## Functional AC
 
 1. Next.js 구현 전 `node_modules/next/dist/docs/` 관련 문서 확인(AGENTS.md)
-2. `result_id` 유효성을 확인하고 사이트 목록을 반환한다. 희망 직무 출처는 결정 D-02를 따른다(기본안: 클라이언트 세션 값으로 링크 치환, DB 컬럼 미추가)
+2. `result_id` 유효성을 확인하고 사이트 목록을 반환한다. 희망 직무는 DB `diagnosis_inputs.desired_job`을 `result_id`로 읽어 링크를 치환한다(D-02 확정)
 3. 희망 직무가 없으면 빈 링크 목록과 `empty: true`를 반환한다
 
 ## Visual AC
@@ -57,7 +57,7 @@ v1 MVP 범위(`docs/PROJECT_SCOPE.md` §1~§3)를 따른다. 로그인·관리�
 
 ## Security/Privacy AC
 
-1. 희망 직무를 DB에 저장하려면 SRS `DiagnosisInput` 개정이 선행되어야 하며, 결정 전 컬럼을 추가하지 않는다
+1. 희망 직무 외에 새 입력 컬럼을 추가하지 않고, 사이트 목록·링크 응답에 다른 사용자의 데이터가 섞이지 않는다
 
 ## Test Cases
 

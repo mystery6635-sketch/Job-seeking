@@ -58,7 +58,7 @@ v1 MVP 범위(`docs/PROJECT_SCOPE.md` §1~§3)를 따른다. 로그인·관리�
 
 1. Next.js 구현 전 `node_modules/next/dist/docs/` 관련 문서 확인(AGENTS.md)
 2. `/diagnosis/result/jobs`에서 Section 순서: Intro(희망 직무 표시 바) → 구인 사이트 연결 Card Grid(희망 직무 있음) 또는 희망 직무 없음 Empty State(상호 배타) → CTA Banner
-3. Section별 데이터 출처: Card는 API-06+`DATA-JOBSITES`, 희망 직무는 진단 세션, CTA는 정적 카피
+3. Section별 데이터 출처: Card는 API-06+`DATA-JOBSITES`, 희망 직무는 API-06이 DB에서 조회한 값, CTA는 정적 카피
 4. 최소 콘텐츠: 연결 Card 6개 이상, 고지 문장 1개(`특정 공고를 선별·추천하지 않으며…`)
 5. Breadcrumb 2번째 구간은 `직무추천`이다. 진단 미완료 접근 시 WarningAlert+SCR-001 CTA
 

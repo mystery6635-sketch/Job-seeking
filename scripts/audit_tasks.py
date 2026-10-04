@@ -2,7 +2,10 @@
 """TASKS/00_TASK_LIST.md 감사.
 
 사용: python scripts/audit_tasks.py [--root .] [--tasks-dir TASKS] [--list 00_TASK_LIST.md]
-종료 코드: 0 = 통과, 1 = 오류 있음
+종료 코드: 0 = 통과(AUDIT_PASS checks=N 출력), 1 = 오류 있음(AUDIT_FAIL)
+출력: TASKS/TASK_MANIFEST.csv, TASKS/TASK_AUDIT_REPORT.md (통과·실패와 관계없이 매번 갱신)
+구현 전·후 모두 통과한다: create 대상이 이미 존재해도, delete 대상이 이미 없어도 오류가 아니다(modify 대상은 존재해야 함).
+검사: 22개(C01~C22), 목록은 CHECKS 상수와 TASK_AUDIT_REPORT.md 참조
 
 00_TASK_LIST.md 형식
   ## 2. Task List       16열 표 (아래 COLUMNS)
@@ -60,12 +63,68 @@ PAGE_OWNER_MIN_COUNT = {
 PAGE_OWNER_COMMON = ["Section 순서", "Section별 데이터 출처", "Empty State", "Lorem ipsum", "빈 영역", "Preview"]
 
 
+EXPECTED_FUNC, EXPECTED_NFR = 16, 8   # PROJECT_SCOPE §4 (validate_inputs.py와 동일)
+
+CHECKS = {
+    "C01": "Task List 구현 ID ↔ TASKS/TASK-*.md 1:1",
+    "C02": "중복 Task ID 0",
+    "C03": "Depends On 누락 0",
+    "C04": "Dependency Cycle 0",
+    "C05": "Screen 5개 모두 Page Owner 정확히 1개",
+    "C06": "Route·Page Entry·Expected Files 일치",
+    "C07": "Component-only Screen 0",
+    "C08": "SCR-001 Starter 제거 AC",
+    "C09": "SCR-003 추천 Card Grid·Empty State 조립 AC",
+    "C10": "SCR-005 MBTI 선택·미선택 상태 조립 AC",
+    "C11": "DB Schema·RLS·Access Task 존재(Seed는 D-05 기록)",
+    "C12": "DB 테이블 4개 범위(desired_job은 diagnosis_inputs 컬럼)",
+    "C13": "외부 입력 비저장 AC",
+    "C14": "인증 없음·기본 RLS AC",
+    "C15": "Playwright Chromium Smoke Task 존재(E2E 2~3개)",
+    "C16": "AWS·EC2·자동 Merge 구현 Task 0",
+    "C17": "REQ-FUNC 16개·REQ-NFR 8개가 Task 또는 EXCLUDED 표에 존재",
+    "C18": "EXCLUDED 상세 구현 파일 미생성",
+    "C19": "Task List 표 형식·요약 일치",
+    "C20": "Page Owner 콘텐츠 계약(Section 순서·최소 콘텐츠·Empty State)",
+    "C21": "금지 용어·Next.js 문서 AC",
+    "C22": "상세 파일 14개 절·Task List 값 일치",
+}
+# 메시지로 검사 그룹을 분류한다(분류되지 않으면 현재 블록의 그룹)
+CLASSIFY = [
+    (re.compile(r"중복 Task ID"), "C02"),
+    (re.compile(r"상세 파일 TASKS/TASK-|고아 파일"), "C01"),
+    (re.compile(r"존재하지 않는 의존|자기 자신에 의존"), "C03"),
+    (re.compile(r"의존성 순환"), "C04"),
+    (re.compile(r"Page Owner Task가|계약에 없는 Screen"), "C05"),
+    (re.compile(r"Component Task가 하나도|Component·API·Data Task .*의존하지 않음|Component-only"), "C07"),
+    (re.compile(r"Starter"), "C08"),
+    (re.compile(r"Page Owner AC에"), "C20"),
+    (re.compile(r"Page Entry|Route|Expected Files|create 대상|modify 대상|delete 대상|동사 오류|상대 경로|같은 파일을 create|여러 Page Entry|Page Owner는 Route Page"), "C06"),
+    (re.compile(r"AWS|EC2|자동 Merge"), "C16"),
+    (re.compile(r"Chromium|Playwright|E2E"), "C15"),
+    (re.compile(r"EXCLUDED 상세|EXCLUDED인데 .*파일"), "C18"),
+    (re.compile(r"Requirement|추적표|NON_IMPLEMENTATION|EXCLUDED인데|IMPLEMENT인데|PROJECT_SCOPE"), "C17"),
+    (re.compile(r"Next\.js 문서|금지|잔재|Placeholder|범위 밖"), "C21"),
+]
+
+
 class Audit:
     def __init__(self):
         self.errors, self.warnings = [], []
+        self.by_check = {k: [] for k in CHECKS}
+        self.cur = "C19"
+        self.forced = None
 
-    def err(self, m):
+    def at(self, code):
+        """이후 오류의 기본 검사 그룹을 바꾼다."""
+        self.cur = code
+
+    def err(self, m, code=None):
+        code = code or self.forced
+        if not code:
+            code = next((c for rx, c in CLASSIFY if rx.search(m)), self.cur)
         self.errors.append(m)
+        self.by_check[code].append(m)
 
     def warn(self, m):
         self.warnings.append(m)
@@ -238,7 +297,8 @@ def main():
             if cells[0] in ("IMPLEMENT", "EXCLUDED"):
                 scope[m.group(1)] = cells[0]
 
-    tables, summary = parse_doc(list_p.read_text(encoding="utf-8"), au)
+    list_text = list_p.read_text(encoding="utf-8")
+    tables, summary = parse_doc(list_text, au)
     tasks = [t for t in (parse_task(c, au) for c in tables["tasks"]) if t]
     ids = [t["id"] for t in tasks]
     by_id = {t["id"]: t for t in tasks}
@@ -277,6 +337,7 @@ def main():
         au.err("요약에 Category별 수가 없음")
 
     # 상세 파일 TASKS/TASK-<ID>.md 와 구현 Task ID의 1:1 대조
+    au.at("C01")
     detail_files = {p.name[len("TASK-"):-len(".md")]: p for p in tdir.glob("TASK-*.md")}
     impl_ids = [t["id"] for t in tasks if t["status"] == "IMPLEMENT"]
     for tid in impl_ids:
@@ -285,12 +346,15 @@ def main():
     for did in detail_files:
         if did not in impl_ids:
             au.err(f"TASK-{did}.md: Task List의 구현 Task가 아님(고아 파일 또는 EXCLUDED)")
+    au.forced = "C22"
     for t in tasks:
         p = detail_files.get(t["id"])
         if p:
             check_detail(t, p.read_text(encoding="utf-8"), au)
+    au.forced = None
 
     # ---- 2. 의존성 -----------------------------------------------------------
+    au.at("C03")
     graph = {t["id"]: t["deps"] for t in tasks}
     for t in tasks:
         for dep in t["deps"]:
@@ -303,6 +367,7 @@ def main():
         au.err("의존성 순환: " + " -> ".join(cyc))
 
     # ---- 3. Page Owner -------------------------------------------------------
+    au.at("C05")
     owners = {}
     for t in tasks:
         if t["cat"] == "PAGE":
@@ -364,6 +429,7 @@ def main():
                 au.err(f"{t['id']}: Page Owner가 아닌 Task가 Page Entry {f}를 생성함")
 
     # ---- 4. src/app/page.tsx Owner(Starter 제거) ---------------------------
+    au.at("C08")
     root_owners = [t for t in tasks if any(f == "src/app/page.tsx" for _, f in t["files"])]
     if not root_owners:
         au.err("src/app/page.tsx를 다루는 Task가 없음(Starter 제거 필요)")
@@ -375,6 +441,7 @@ def main():
             au.err(f"{t['id']}: src/app/page.tsx Owner AC에 Starter 제거·/diagnosis redirect 없음")
 
     # ---- 5. Expected Files 실제 파일 트리 ----------------------------------
+    au.at("C06")
     owner_of = {}
     for t in tasks:
         for verb, f in t["files"]:
@@ -384,17 +451,17 @@ def main():
             if f.startswith("/") or ".." in Path(f).parts:
                 au.err(f"{t['id']}: 상대 경로가 아님 {f}")
                 continue
-            exists = (root / f).exists()
-            if verb in ("modify", "delete") and not exists:
-                au.err(f"{t['id']}: {verb} 대상이 존재하지 않음 {f}")
-            if verb == "create" and exists:
-                au.err(f"{t['id']}: create 대상이 이미 존재함 {f} (modify로 바꾸거나 제거)")
+            # 구현 전·후 모두 통과해야 한다. create 대상은 이미 있어도 되고(구현 후),
+            # delete 대상은 이미 없어도 된다(삭제 후). modify 대상은 항상 존재해야 한다.
+            if verb == "modify" and not (root / f).exists():
+                au.err(f"{t['id']}: modify 대상이 존재하지 않음 {f}")
             if verb == "create":
                 if f in owner_of:
                     au.err(f"{t['id']}: {owner_of[f]}와 같은 파일을 create함 {f}")
                 owner_of[f] = t["id"]
 
     # ---- 6. Requirement 커버리지 -------------------------------------------
+    au.at("C17")
     trace = {}
     for c in tables["trace"]:
         if len(c) < 4:
@@ -440,6 +507,7 @@ def main():
             au.err(f"{rid}: PROJECT_SCOPE에 없는 Requirement")
 
     # ---- 7. DB 테이블 -------------------------------------------------------
+    au.at("C12")
     db_text = " ".join(t["blob"] for t in tasks if t["cat"] == "DB")
     found = {n for n in ALLOWED_TABLES if n in db_text}
     for n in sorted(ALLOWED_TABLES - found):
@@ -449,11 +517,11 @@ def main():
             au.err(f"DB 테이블 수 표기 {n}개 != {MAX_TABLES}")
     for bad in re.findall(r"`?(users?|accounts?|payments?|admins?|sessions?|profiles?)`?\s*테이블", db_text):
         au.err(f"허용되지 않은 테이블 '{bad}'")
-    for t in tasks:
-        if t["cat"] == "DB" and "desired_job" in t["blob"]:
-            au.err(f"{t['id']}: 희망 직무 DB 컬럼(desired_job)은 결정 D-02 전까지 추가 금지")
+    if "desired_job" not in db_text:
+        au.err("DB Task에 희망 직무 컬럼 desired_job 정의가 없음(결정 D-02: diagnosis_inputs 선택 컬럼으로 저장)")
 
     # ---- 8. Playwright / 금지 용어 / Next.js 문서 --------------------------
+    au.at("C21")
     e2e = [t for t in tasks if t["cat"] == "E2E"]
     if not 2 <= len(e2e) <= MAX_E2E:
         au.err(f"E2E(Playwright) Task {len(e2e)}개 (2~{MAX_E2E}개로 묶어야 함)")
@@ -472,7 +540,156 @@ def main():
             au.err(f"{t['id']}: Next.js 문서(node_modules/next/dist/docs) 확인 AC 없음")
         elif t["cat"] in ("FOUNDATION", "DB") and "node_modules/next/dist/docs" not in blob and t["cat"] == "FOUNDATION":
             au.warn(f"{t['id']}: Next.js 문서 확인 AC 없음")
+
+    # ---- 9. 최종 감사 규칙(추가 검사) ---------------------------------------
+    def ac_of(t):
+        return " ".join([t["fac"], t["vac"], t["sac"], t["verify"]])
+
+    # C07 Component-only Screen: Component·API·Data Task가 있는데 Page Owner가 없는 Screen
+    au.at("C07")
+    for t in tasks:
+        for sid in re.findall(r"SCR-\d{3}", t["screen"]):
+            if sid not in screens:
+                au.err(f"{t['id']}: 계약에 없는 Screen {sid}를 참조함", "C05")
+            elif t["cat"] in ("COMPONENT", "PAGE") and len(owners.get(sid, [])) != 1:
+                au.err(f"Component-only Screen {sid}: Page Owner 없이 {t['id']}만 존재")
+
+    # C09 SCR-003: 추천 Card Grid ↔ 감점 없음 Empty State를 실제로 조립
+    au.at("C09")
+    for sid, need in (("SCR-003", ["Card Grid", "Empty State", "상호 배타", "6개"]),):
+        po = (owners.get(sid) or [None])[0]
+        if po:
+            for kw in need:
+                if kw not in ac_of(po):
+                    au.err(f"{po['id']}: {sid} 조립 AC에 '{kw}' 없음")
+            if "CMP-RECO-GRID" not in po["deps"]:
+                au.err(f"{po['id']}: CMP-RECO-GRID에 의존하지 않음")
+
+    # C10 SCR-005: MBTI 선택·미선택·고지 상태를 실제로 조립
+    au.at("C10")
+    po = (owners.get("SCR-005") or [None])[0]
+    if po:
+        for kw in ("16유형", "미선택", "Empty State", "핵심 100점에 반영되지 않음", "강점", "유의점"):
+            if kw not in ac_of(po):
+                au.err(f"{po['id']}: SCR-005 조립 AC에 '{kw}' 없음")
+        for dep in ("CMP-MBTI-GRID", "CMP-ATTITUDE-PANEL"):
+            if dep not in po["deps"]:
+                au.err(f"{po['id']}: {dep}에 의존하지 않음")
+
+    # C11 DB Schema·RLS·Access Task 존재, Seed는 존재하거나 결정(D-05)이 기록돼야 함
+    au.at("C11")
+    db_ids = [t["id"] for t in tasks if t["cat"] == "DB"]
+    for need in ("DB-SCHEMA", "DB-RLS", "DB-ACCESS"):
+        if not any(i.startswith(need) for i in db_ids):
+            au.err(f"{need}* Task가 없음")
+    if not any(i.startswith("DB-SEED") for i in db_ids) and not re.search(r"DB-SEED-BASE[^|\n]*만들지 않는다", list_text):
+        au.err("DB-SEED* Task도, Seed 미생성 결정(D-05) 기록도 없음")
+
+    # C13 외부 입력 비저장: 외부 구인 사이트로 보낸 입력·이동 기록을 서버·DB에 저장하지 않는다
+    au.at("C13")
+    job_cmp = by_id.get("CMP-JOB-SITES")
+    if not job_cmp:
+        au.err("CMP-JOB-SITES Task가 없음")
+    elif not ("외부" in job_cmp["sac"] and "저장하지 않" in job_cmp["sac"]):
+        au.err("CMP-JOB-SITES Security/Privacy AC에 외부 이동·입력 비저장 문구 없음")
+    obs = by_id.get("FEAT-OBS-EVENTS")
+    if obs and "입력값" not in obs["sac"]:
+        au.err("FEAT-OBS-EVENTS Security/Privacy AC에 입력값 비포함 문구 없음")
+
+    # C14 인증 없음·기본 RLS
+    au.at("C14")
+    for t in tasks:
+        paths = " ".join(f for _, f in t["files"]).lower()
+        if re.search(r"auth|login|signup|signin", t["id"].lower() + " " + paths):
+            au.err(f"{t['id']}: 인증(로그인) 관련 Task·파일은 v1 범위 밖")
+    rls = by_id.get("DB-RLS-BASE")
+    if not rls:
+        au.err("DB-RLS-BASE Task가 없음")
+    else:
+        if "RLS" not in rls["fac"] or "anon" not in rls["fac"]:
+            au.err("DB-RLS-BASE Functional AC에 RLS 활성화·anon 정책 없음 문구 없음")
+        if "service" not in rls["sac"] and "NEXT_PUBLIC" not in rls["sac"]:
+            au.err("DB-RLS-BASE Security/Privacy AC에 서버 전용 키 문구 없음")
+
+    # C15 Playwright Chromium Smoke Task
+    au.at("C15")
+    if not any(t["cat"] == "E2E" and "SMOKE" in t["id"] and "chromium" in t["blob"].lower() for t in tasks):
+        au.err("Playwright Chromium Smoke Task(E2E, ID에 SMOKE)가 없음")
+
+    # C16 AWS·EC2·자동 Merge 구현 Task 0 (Task ID·제목·파일 경로·Verify)
+    au.at("C16")
+    for t in tasks:
+        head = " ".join([t["id"], t["title"]] + [f for _, f in t["files"]])
+        if re.search(r"\baws\b|\bec2\b|auto[-_ ]?merge|자동\s*merge|자동\s*머지|merge-queue|mergify", head, re.I):
+            au.err(f"{t['id']}: AWS·EC2·자동 Merge 구현 Task 금지")
+
+    # C17 REQ-FUNC·REQ-NFR 개수와 Task/EXCLUDED 표 존재
+    au.at("C17")
+    n_func = sum(1 for r in scope if r.startswith("REQ-FUNC"))
+    n_nfr = sum(1 for r in scope if r.startswith("REQ-NFR"))
+    if n_func != EXPECTED_FUNC or n_nfr != EXPECTED_NFR:
+        au.err(f"PROJECT_SCOPE Requirement 수 FUNC {n_func}/NFR {n_nfr} != 기대 {EXPECTED_FUNC}/{EXPECTED_NFR}")
+    for rid in scope:
+        if rid not in referenced and rid not in nonimpl:
+            au.err(f"{rid}: Task에도 NON_IMPLEMENTATION(EXCLUDED) 표에도 없음")
+
+    # C18 EXCLUDED 상세 구현 파일 미생성
+    au.at("C18")
+    excluded = [r for r, st in scope.items() if st == "EXCLUDED"]
+    for did, p in detail_files.items():
+        for rid in excluded:
+            if rid in did or f"# TASK-{rid}" in p.read_text(encoding="utf-8"):
+                au.err(f"EXCLUDED 상세 구현 파일이 생성됨: {p.name} ({rid})")
+    for t in tasks:
+        for rid in excluded:
+            if rid in t["reqs"] and t["id"] in detail_files:
+                au.err(f"EXCLUDED 상세 구현 파일이 EXCLUDED Requirement {rid}를 구현 대상으로 참조함: TASK-{t['id']}.md")
+
+    write_outputs(root, tdir, tasks, detail_files, au, scope, nonimpl, owners, screens)
     return report(au, len(tasks))
+
+
+def write_outputs(root, tdir, tasks, detail_files, au, scope, nonimpl, owners, screens):
+    """TASK_MANIFEST.csv 와 TASK_AUDIT_REPORT.md 를 쓴다(실패해도 쓴다)."""
+    import csv
+    with (tdir / "TASK_MANIFEST.csv").open("w", encoding="utf-8-sig", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["Seq", "Task ID", "제목", "Category", "Status", "Priority", "Screen", "Route", "Page Entry",
+                    "Requirement Ref", "Depends On", "Expected Files", "Detail File", "Detail Exists"])
+        for t in tasks:
+            w.writerow([t["seq"], t["id"], t["title"], t["cat"], t["status"], t["pri"], t["screen"], t["route"], t["entry"],
+                        ";".join(t["reqs"]), ";".join(t["deps"]), ";".join(f"{v} {p}" for v, p in t["files"]),
+                        f"{tdir.name}/TASK-{t['id']}.md", "Y" if t["id"] in detail_files else "N"])
+    passed = sum(1 for c in CHECKS if not au.by_check[c])
+    ok = not au.errors
+    cats = {}
+    for t in tasks:
+        cats[t["cat"]] = cats.get(t["cat"], 0) + 1
+    L = ["# TASK_AUDIT_REPORT", "",
+         f"- 결과: **{'AUDIT_PASS' if ok else 'AUDIT_FAIL'}**",
+         f"- 검사: {passed}/{len(CHECKS)} 통과, 오류 {len(au.errors)}건, 경고 {len(au.warnings)}건",
+         f"- Task {len(tasks)}개 (" + ", ".join(f"{k} {v}" for k, v in sorted(cats.items())) + ")",
+         f"- 상세 파일 {len(detail_files)}개, Requirement {len(scope)}개 (IMPLEMENT {sum(1 for s in scope.values() if s == 'IMPLEMENT')}, EXCLUDED {sum(1 for s in scope.values() if s == 'EXCLUDED')})",
+         "- 이 감사는 Task 문서의 일관성만 검증한다. 코드 구현·테스트 통과를 뜻하지 않는다.", "",
+         "## 검사 결과", "", "| ID | 검사 | 결과 | 오류 수 |", "|---|---|---|---|"]
+    for code, title in CHECKS.items():
+        n = len(au.by_check[code])
+        L.append(f"| {code} | {title} | {'PASS' if not n else 'FAIL'} | {n} |")
+    L += ["", "## Page Owner", "", "| Screen | Route | Page Entry | Page Owner Task |", "|---|---|---|---|"]
+    for sid, s in screens.items():
+        po = owners.get(sid) or []
+        L.append(f"| {sid} | `{s['route']}` | `{s['page_entry']}` | {', '.join('`' + p['id'] + '`' for p in po) or '없음'} |")
+    L += ["", "## 오류", ""]
+    if au.errors:
+        for code, errs in au.by_check.items():
+            for e in errs:
+                L.append(f"- [{code}] {e}")
+    else:
+        L.append("없음")
+    L += ["", "## 경고", ""] + ([f"- {w}" for w in au.warnings] or ["없음"])
+    L += ["", "## 산출물", "", f"- `{tdir.name}/TASK_MANIFEST.csv` — Task 목록과 상세 파일 존재 여부",
+          f"- `{tdir.name}/TASK_AUDIT_REPORT.md` — 이 문서"]
+    (tdir / "TASK_AUDIT_REPORT.md").write_text("\n".join(L) + "\n", encoding="utf-8", newline="\n")
 
 
 def report(au, n):
@@ -482,7 +699,9 @@ def report(au, n):
     for e in au.errors:
         print(f"ERROR {e}")
     ok = not au.errors
+    passed = sum(1 for c in CHECKS if not au.by_check[c])
     print("RESULT:", "PASS" if ok else f"FAIL ({len(au.errors)} errors)")
+    print(f"AUDIT_PASS checks={len(CHECKS)}" if ok else f"AUDIT_FAIL checks={passed}/{len(CHECKS)} passed")
     return 0 if ok else 1
 
 

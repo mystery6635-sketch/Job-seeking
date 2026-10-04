@@ -10,7 +10,7 @@
 
 Desktop·Mobile Preview 확인. 자동화하지 않는 항목을 수동으로 확인하고 증거를 남긴다.
 
-선행 Task: `PAGE-SCR001`, `PAGE-SCR002`, `PAGE-SCR003`, `PAGE-SCR004`, `PAGE-SCR005`.
+선행 Task: `PAGE-SCR001`, `PAGE-SCR002`, `PAGE-SCR003`, `PAGE-SCR004`, `PAGE-SCR005`, `OPS-VERCEL-DB-CHECK`.
 
 이 Task에 의존하는 Task: `RELEASE-CHECK`.
 
@@ -41,6 +41,7 @@ v1 MVP 범위(`docs/PROJECT_SCOPE.md` §1~§3)를 따른다. 로그인·관리�
 - `PAGE-SCR003` — 직업훈련 추천 페이지 조립(Page Owner)
 - `PAGE-SCR004` — 직무추천(외부 구인 사이트 검색 연결) 페이지 조립(Page Owner)
 - `PAGE-SCR005` — 직무수행태도 진단(MBTI 보조 지표) 페이지 조립(Page Owner)
+- `OPS-VERCEL-DB-CHECK` — Vercel 수동 배포와 DB 연결·플랫폼 로그 설정
 
 ## Expected Files
 
@@ -49,7 +50,7 @@ v1 MVP 범위(`docs/PROJECT_SCOPE.md` §1~§3)를 따른다. 로그인·관리�
 
 ## Functional AC
 
-1. 5개 Screen Desktop(1440), SCR-001·003 Mobile(390) Preview에서 Section 순서·최소 콘텐츠 수·Empty State·가로 스크롤 없음·첫 화면 다음 Section 노출을 확인한다
+1. 5개 Screen Desktop(1440), SCR-001·003 Mobile(390) Preview(OPS-VERCEL-DB-CHECK로 배포한 Vercel URL)에서 Section 순서·최소 콘텐츠 수·Empty State·가로 스크롤 없음·첫 화면 다음 Section 노출을 확인한다
 2. D-001 Token 외 색 사용, 접근성(포커스 링·44px)을 확인한다
 
 ## Visual AC

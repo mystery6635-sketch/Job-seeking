@@ -47,9 +47,10 @@ v1 MVP 범위(`docs/PROJECT_SCOPE.md` §1~§3)를 따른다. 로그인·관리�
 
 ## Functional AC
 
-1. `npm run test`(Vitest)와 `npm run e2e`(Playwright)가 동작한다
-2. Playwright project는 `chromium` 하나만 정의한다(Firefox·WebKit·부하 테스트 금지)
-3. Playwright `webServer`는 `npm run dev`를 사용한다
+1. Next.js 구현 전 `node_modules/next/dist/docs/` 관련 문서 확인(AGENTS.md)
+2. `npm run test`(Vitest)와 `npm run e2e`(Playwright)가 동작한다
+3. Playwright project는 `chromium` 하나만 정의한다(Firefox·WebKit·부하 테스트 금지)
+4. Playwright `webServer`는 `npm run dev`를 사용한다
 
 ## Visual AC
 

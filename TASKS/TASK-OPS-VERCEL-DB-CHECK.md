@@ -12,7 +12,7 @@ Vercel 수동 배포와 DB 연결·플랫폼 로그 설정. CI 또는 배포·DB
 
 선행 Task: `PAGE-SCR001`, `PAGE-SCR002`, `PAGE-SCR003`, `PAGE-SCR004`, `PAGE-SCR005`, `DB-RLS-BASE`, `API-DIAG-SUBMIT`.
 
-이 Task에 의존하는 Task: `MANUAL-LOGS-OBS`.
+이 Task에 의존하는 Task: `MANUAL-PREVIEW`, `MANUAL-LOGS-OBS`.
 
 ## Project Scope
 

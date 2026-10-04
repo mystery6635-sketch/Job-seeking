@@ -1,7 +1,7 @@
 # TASK_AUDIT_REPORT
 
 - 결과: **AUDIT_PASS**
-- 검사: 22/22 통과, 오류 0건, 경고 1건
+- 검사: 22/22 통과, 오류 0건, 경고 0건
 - Task 56개 (API 7, COMPONENT 9, DATA 3, DB 3, E2E 3, FOUNDATION 8, LOGIC 5, MANUAL 5, OPS 2, PAGE 5, TEST 6)
 - 상세 파일 56개, Requirement 24개 (IMPLEMENT 18, EXCLUDED 6)
 - 이 감사는 Task 문서의 일관성만 검증한다. 코드 구현·테스트 통과를 뜻하지 않는다.
@@ -49,7 +49,7 @@
 
 ## 경고
 
-- FND-TEST-TOOLING: Next.js 문서 확인 AC 없음
+없음
 
 ## 산출물
 

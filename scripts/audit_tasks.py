@@ -652,14 +652,23 @@ def main():
 def write_outputs(root, tdir, tasks, detail_files, au, scope, nonimpl, owners, screens):
     """TASK_MANIFEST.csv 와 TASK_AUDIT_REPORT.md 를 쓴다(실패해도 쓴다)."""
     import csv
+    import json
+    wave_of = {}  # build_waves.py가 만든 WAVE_STATE.json이 있으면 wave_id 열을 유지한다
+    sp = tdir / "WAVE_STATE.json"
+    if sp.is_file():
+        try:
+            wave_of = {t: w["wave_id"] for w in json.loads(sp.read_text(encoding="utf-8"))["waves"] for t in w["task_ids"]}
+        except (ValueError, KeyError, TypeError):
+            wave_of = {}
     with (tdir / "TASK_MANIFEST.csv").open("w", encoding="utf-8-sig", newline="") as f:
         w = csv.writer(f)
         w.writerow(["Seq", "Task ID", "제목", "Category", "Status", "Priority", "Screen", "Route", "Page Entry",
-                    "Requirement Ref", "Depends On", "Expected Files", "Detail File", "Detail Exists"])
+                    "Requirement Ref", "Depends On", "Expected Files", "Detail File", "Detail Exists"] + (["wave_id"] if wave_of else []))
         for t in tasks:
             w.writerow([t["seq"], t["id"], t["title"], t["cat"], t["status"], t["pri"], t["screen"], t["route"], t["entry"],
                         ";".join(t["reqs"]), ";".join(t["deps"]), ";".join(f"{v} {p}" for v, p in t["files"]),
-                        f"{tdir.name}/TASK-{t['id']}.md", "Y" if t["id"] in detail_files else "N"])
+                        f"{tdir.name}/TASK-{t['id']}.md", "Y" if t["id"] in detail_files else "N"]
+                       + ([wave_of.get(t["id"], "")] if wave_of else []))
     passed = sum(1 for c in CHECKS if not au.by_check[c])
     ok = not au.errors
     cats = {}

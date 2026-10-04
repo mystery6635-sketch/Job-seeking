@@ -1,0 +1,405 @@
+{
+  "schema_version": "jobfit-wave-v1",
+  "generated_at": "2026-10-04T03:54:34Z",
+  "waves": [
+    {
+      "wave_id": "W01",
+      "title": "Scaffold·테스트 도구·Harness 확인",
+      "task_ids": [
+        "FND-TEST-TOOLING"
+      ],
+      "status": "pending",
+      "checkpoint_required": false,
+      "checkpoint_result": null
+    },
+    {
+      "wave_id": "W02",
+      "title": "공통 UI(Token·Layout·Feedback·Section)·정적 데이터 (1/2)",
+      "task_ids": [
+        "DATA-JOBSITES",
+        "DATA-MBTI-ATTITUDE",
+        "DATA-RECOMMENDATIONS",
+        "FND-TOKENS",
+        "FND-FEEDBACK"
+      ],
+      "status": "pending",
+      "checkpoint_required": false,
+      "checkpoint_result": null
+    },
+    {
+      "wave_id": "W03",
+      "title": "공통 UI(Token·Layout·Feedback·Section)·정적 데이터 (2/2)",
+      "task_ids": [
+        "FND-ROOT-REDIRECT",
+        "FND-SECTIONS",
+        "FND-SESSION-GUARD",
+        "FND-SHELL",
+        "FND-NOT-FOUND"
+      ],
+      "status": "pending",
+      "checkpoint_required": false,
+      "checkpoint_result": null
+    },
+    {
+      "wave_id": "W04",
+      "title": "진단 로직·Supabase 4개 Table·기본 RLS (1/2)",
+      "task_ids": [
+        "LIB-INPUT-VALIDATION",
+        "DB-SCHEMA-BASE",
+        "DB-RLS-BASE",
+        "LIB-JOBLINK-BUILDER"
+      ],
+      "status": "pending",
+      "checkpoint_required": false,
+      "checkpoint_result": null
+    },
+    {
+      "wave_id": "W05",
+      "title": "진단 로직·Supabase 4개 Table·기본 RLS (2/2)",
+      "task_ids": [
+        "LIB-SCORING-ENGINE",
+        "LIB-DEDUCTION-REASONS",
+        "LIB-RECO-MAPPER",
+        "DB-ACCESS"
+      ],
+      "status": "pending",
+      "checkpoint_required": false,
+      "checkpoint_result": null
+    },
+    {
+      "wave_id": "W06",
+      "title": "SCR-001 진단 입력(API·Component·Page Owner)",
+      "task_ids": [
+        "API-DIAG-SUBMIT",
+        "CMP-FIELDS",
+        "FEAT-OBS-EVENTS",
+        "CMP-DIAG-FORM",
+        "PAGE-SCR001"
+      ],
+      "status": "pending",
+      "checkpoint_required": true,
+      "checkpoint_result": null
+    },
+    {
+      "wave_id": "W07",
+      "title": "SCR-002 역량리포트(API·Component·Page Owner)",
+      "task_ids": [
+        "API-DIAG-REASONS",
+        "API-DIAG-RESULT",
+        "CMP-DEDUCTION-CHIPS",
+        "CMP-REASON-DRAWER",
+        "CMP-SCORE-HERO",
+        "PAGE-SCR002"
+      ],
+      "status": "pending",
+      "checkpoint_required": true,
+      "checkpoint_result": null
+    },
+    {
+      "wave_id": "W08",
+      "title": "SCR-003 직업훈련 추천(API·Component·Page Owner)",
+      "task_ids": [
+        "API-DIAG-RECOMMENDATIONS",
+        "CMP-RECO-GRID",
+        "PAGE-SCR003"
+      ],
+      "status": "pending",
+      "checkpoint_required": true,
+      "checkpoint_result": null
+    },
+    {
+      "wave_id": "W09",
+      "title": "SCR-004 직무추천(API·Component·Page Owner)",
+      "task_ids": [
+        "API-DIAG-JOBS",
+        "CMP-JOB-SITES",
+        "PAGE-SCR004"
+      ],
+      "status": "pending",
+      "checkpoint_required": true,
+      "checkpoint_result": null
+    },
+    {
+      "wave_id": "W10",
+      "title": "SCR-005 직무수행태도 진단(API·Component·Page Owner)",
+      "task_ids": [
+        "API-ATTITUDE",
+        "CMP-ATTITUDE-PANEL",
+        "CMP-MBTI-GRID",
+        "PAGE-SCR005"
+      ],
+      "status": "pending",
+      "checkpoint_required": true,
+      "checkpoint_result": null
+    },
+    {
+      "wave_id": "W11",
+      "title": "Unit·Playwright Chromium·CI (1/2)",
+      "task_ids": [
+        "E2E-DIAG-FLOW",
+        "E2E-JOBS-ATTITUDE",
+        "E2E-PUBLIC-SMOKE",
+        "TEST-RLS-BASIC",
+        "UNIT-JOBLINK"
+      ],
+      "status": "pending",
+      "checkpoint_required": false,
+      "checkpoint_result": null
+    },
+    {
+      "wave_id": "W12",
+      "title": "Unit·Playwright Chromium·CI (2/2)",
+      "task_ids": [
+        "UNIT-MBTI-MAP",
+        "UNIT-REASONS-RECO",
+        "UNIT-SCORING",
+        "UNIT-VALIDATION",
+        "OPS-CI"
+      ],
+      "status": "pending",
+      "checkpoint_required": false,
+      "checkpoint_result": null
+    },
+    {
+      "wave_id": "W13",
+      "title": "Vercel Preview·수동 확인·Release 확인",
+      "task_ids": [
+        "MANUAL-JOBLINKS",
+        "MANUAL-PERF",
+        "OPS-VERCEL-DB-CHECK",
+        "MANUAL-LOGS-OBS",
+        "MANUAL-PREVIEW",
+        "RELEASE-CHECK"
+      ],
+      "status": "pending",
+      "checkpoint_required": true,
+      "checkpoint_result": null
+    }
+  ],
+  "tasks": {
+    "FND-TEST-TOOLING": {
+      "wave_id": "W01",
+      "status": "pending"
+    },
+    "DATA-JOBSITES": {
+      "wave_id": "W02",
+      "status": "pending"
+    },
+    "DATA-MBTI-ATTITUDE": {
+      "wave_id": "W02",
+      "status": "pending"
+    },
+    "DATA-RECOMMENDATIONS": {
+      "wave_id": "W02",
+      "status": "pending"
+    },
+    "FND-TOKENS": {
+      "wave_id": "W02",
+      "status": "pending"
+    },
+    "FND-FEEDBACK": {
+      "wave_id": "W02",
+      "status": "pending"
+    },
+    "FND-ROOT-REDIRECT": {
+      "wave_id": "W03",
+      "status": "pending"
+    },
+    "FND-SECTIONS": {
+      "wave_id": "W03",
+      "status": "pending"
+    },
+    "FND-SESSION-GUARD": {
+      "wave_id": "W03",
+      "status": "pending"
+    },
+    "FND-SHELL": {
+      "wave_id": "W03",
+      "status": "pending"
+    },
+    "FND-NOT-FOUND": {
+      "wave_id": "W03",
+      "status": "pending"
+    },
+    "LIB-INPUT-VALIDATION": {
+      "wave_id": "W04",
+      "status": "pending"
+    },
+    "DB-SCHEMA-BASE": {
+      "wave_id": "W04",
+      "status": "pending"
+    },
+    "DB-RLS-BASE": {
+      "wave_id": "W04",
+      "status": "pending"
+    },
+    "LIB-JOBLINK-BUILDER": {
+      "wave_id": "W04",
+      "status": "pending"
+    },
+    "LIB-SCORING-ENGINE": {
+      "wave_id": "W05",
+      "status": "pending"
+    },
+    "LIB-DEDUCTION-REASONS": {
+      "wave_id": "W05",
+      "status": "pending"
+    },
+    "LIB-RECO-MAPPER": {
+      "wave_id": "W05",
+      "status": "pending"
+    },
+    "DB-ACCESS": {
+      "wave_id": "W05",
+      "status": "pending"
+    },
+    "API-DIAG-SUBMIT": {
+      "wave_id": "W06",
+      "status": "pending"
+    },
+    "CMP-FIELDS": {
+      "wave_id": "W06",
+      "status": "pending"
+    },
+    "FEAT-OBS-EVENTS": {
+      "wave_id": "W06",
+      "status": "pending"
+    },
+    "CMP-DIAG-FORM": {
+      "wave_id": "W06",
+      "status": "pending"
+    },
+    "PAGE-SCR001": {
+      "wave_id": "W06",
+      "status": "pending"
+    },
+    "API-DIAG-REASONS": {
+      "wave_id": "W07",
+      "status": "pending"
+    },
+    "API-DIAG-RESULT": {
+      "wave_id": "W07",
+      "status": "pending"
+    },
+    "CMP-DEDUCTION-CHIPS": {
+      "wave_id": "W07",
+      "status": "pending"
+    },
+    "CMP-REASON-DRAWER": {
+      "wave_id": "W07",
+      "status": "pending"
+    },
+    "CMP-SCORE-HERO": {
+      "wave_id": "W07",
+      "status": "pending"
+    },
+    "PAGE-SCR002": {
+      "wave_id": "W07",
+      "status": "pending"
+    },
+    "API-DIAG-RECOMMENDATIONS": {
+      "wave_id": "W08",
+      "status": "pending"
+    },
+    "CMP-RECO-GRID": {
+      "wave_id": "W08",
+      "status": "pending"
+    },
+    "PAGE-SCR003": {
+      "wave_id": "W08",
+      "status": "pending"
+    },
+    "API-DIAG-JOBS": {
+      "wave_id": "W09",
+      "status": "pending"
+    },
+    "CMP-JOB-SITES": {
+      "wave_id": "W09",
+      "status": "pending"
+    },
+    "PAGE-SCR004": {
+      "wave_id": "W09",
+      "status": "pending"
+    },
+    "API-ATTITUDE": {
+      "wave_id": "W10",
+      "status": "pending"
+    },
+    "CMP-ATTITUDE-PANEL": {
+      "wave_id": "W10",
+      "status": "pending"
+    },
+    "CMP-MBTI-GRID": {
+      "wave_id": "W10",
+      "status": "pending"
+    },
+    "PAGE-SCR005": {
+      "wave_id": "W10",
+      "status": "pending"
+    },
+    "E2E-DIAG-FLOW": {
+      "wave_id": "W11",
+      "status": "pending"
+    },
+    "E2E-JOBS-ATTITUDE": {
+      "wave_id": "W11",
+      "status": "pending"
+    },
+    "E2E-PUBLIC-SMOKE": {
+      "wave_id": "W11",
+      "status": "pending"
+    },
+    "TEST-RLS-BASIC": {
+      "wave_id": "W11",
+      "status": "pending"
+    },
+    "UNIT-JOBLINK": {
+      "wave_id": "W11",
+      "status": "pending"
+    },
+    "UNIT-MBTI-MAP": {
+      "wave_id": "W12",
+      "status": "pending"
+    },
+    "UNIT-REASONS-RECO": {
+      "wave_id": "W12",
+      "status": "pending"
+    },
+    "UNIT-SCORING": {
+      "wave_id": "W12",
+      "status": "pending"
+    },
+    "UNIT-VALIDATION": {
+      "wave_id": "W12",
+      "status": "pending"
+    },
+    "OPS-CI": {
+      "wave_id": "W12",
+      "status": "pending"
+    },
+    "MANUAL-JOBLINKS": {
+      "wave_id": "W13",
+      "status": "pending"
+    },
+    "MANUAL-PERF": {
+      "wave_id": "W13",
+      "status": "pending"
+    },
+    "OPS-VERCEL-DB-CHECK": {
+      "wave_id": "W13",
+      "status": "pending"
+    },
+    "MANUAL-LOGS-OBS": {
+      "wave_id": "W13",
+      "status": "pending"
+    },
+    "MANUAL-PREVIEW": {
+      "wave_id": "W13",
+      "status": "pending"
+    },
+    "RELEASE-CHECK": {
+      "wave_id": "W13",
+      "status": "pending"
+    }
+  }
+}

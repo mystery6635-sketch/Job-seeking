@@ -1,0 +1,7 @@
+{
+  "tool_name": "mcp__stitch__edit_screens",
+  "tool_input_preview": "{\"projectId\":\"13615029693301324722\",\"selectedScreenIds\":[\"c48749865ebf4994806327d1798e786c\"],\"prompt\":\"이 화면의 상단 브레드크럼에서 \\\"역량 리포트\\\"라는 단어가 보이면 \\\"직무추천\\\"으로 바꿔줘. 다른 것은 건드리지 마.\"}",
+  "error": "The operation timed out.",
+  "timestamp": "2026-10-03T10:17:32.841Z",
+  "retry_count": 1
+}

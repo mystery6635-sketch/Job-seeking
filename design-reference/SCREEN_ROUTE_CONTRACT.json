@@ -1,0 +1,103 @@
+{
+  "schema_version": "jobfit-screen-route-v1",
+  "framework": "nextjs-app-router",
+  "design_version": "D-001",
+  "screens": [
+    {
+      "screen_id": "SCR-001",
+      "name": "진단 입력",
+      "tier": "core",
+      "route": "/diagnosis",
+      "page_entry": "src/app/diagnosis/page.tsx",
+      "page_owner_task_required": true,
+      "preview_required": true,
+      "starter_template_forbidden": true,
+      "mobile_variant": true
+    },
+    {
+      "screen_id": "SCR-002",
+      "name": "역량리포트",
+      "tier": "core",
+      "route": "/diagnosis/result",
+      "page_entry": "src/app/diagnosis/result/page.tsx",
+      "page_owner_task_required": true,
+      "preview_required": true,
+      "starter_template_forbidden": false,
+      "mobile_variant": false
+    },
+    {
+      "screen_id": "SCR-003",
+      "name": "직업훈련 추천",
+      "tier": "core",
+      "route": "/diagnosis/result/recommendations",
+      "page_entry": "src/app/diagnosis/result/recommendations/page.tsx",
+      "page_owner_task_required": true,
+      "preview_required": true,
+      "starter_template_forbidden": false,
+      "mobile_variant": true
+    },
+    {
+      "screen_id": "SCR-004",
+      "name": "직무추천(외부 구인 사이트 검색 연결)",
+      "tier": "core",
+      "route": "/diagnosis/result/jobs",
+      "page_entry": "src/app/diagnosis/result/jobs/page.tsx",
+      "page_owner_task_required": true,
+      "preview_required": true,
+      "starter_template_forbidden": false,
+      "mobile_variant": false
+    },
+    {
+      "screen_id": "SCR-005",
+      "name": "직무수행태도 진단(MBTI 보조 지표)",
+      "tier": "supporting",
+      "route": "/diagnosis/attitude",
+      "page_entry": "src/app/diagnosis/attitude/page.tsx",
+      "page_owner_task_required": true,
+      "preview_required": true,
+      "starter_template_forbidden": false,
+      "mobile_variant": false
+    }
+  ],
+  "technical_routes": [
+    { "route": "/", "kind": "redirect", "entry": "src/app/page.tsx", "behavior": "/diagnosis로 redirect. create-next-app 스타터 화면 유지 금지", "counts_as_screen": false },
+    { "route": "/api/diagnosis", "kind": "api", "entry": "src/app/api/diagnosis/route.ts", "methods": ["POST"], "api_id": "API-01", "counts_as_screen": false },
+    { "route": "/api/diagnosis/[result_id]", "kind": "api", "entry": "src/app/api/diagnosis/[result_id]/route.ts", "methods": ["GET"], "api_id": "API-02", "counts_as_screen": false },
+    { "route": "/api/diagnosis/[result_id]/reasons", "kind": "api", "entry": "src/app/api/diagnosis/[result_id]/reasons/route.ts", "methods": ["GET"], "api_id": "API-03", "counts_as_screen": false },
+    { "route": "/api/diagnosis/[result_id]/recommendations", "kind": "api", "entry": "src/app/api/diagnosis/[result_id]/recommendations/route.ts", "methods": ["GET"], "api_id": "API-04", "counts_as_screen": false },
+    { "route": "/api/diagnosis/[result_id]/jobs", "kind": "api", "entry": "src/app/api/diagnosis/[result_id]/jobs/route.ts", "methods": ["GET"], "api_id": "API-06", "counts_as_screen": false },
+    { "route": "/api/attitude", "kind": "api", "entry": "src/app/api/attitude/route.ts", "methods": ["GET"], "api_id": "API-07", "counts_as_screen": false },
+    { "route": "*", "kind": "not-found", "entry": "src/app/not-found.tsx", "behavior": "안내 문장 + /diagnosis 이동 CTA", "counts_as_screen": false }
+  ],
+  "excluded_technical_routes": [
+    { "route": "auth callback", "reason": "로그인·계정은 v1 범위 밖(OS-06) — 생성하지 않음" },
+    { "route": "/diagnosis/result/reasons", "reason": "SCR-002 Drawer/Modal로 구현, 별도 라우트 없음" },
+    { "route": "OP-RECO-PERSONALIZED-GET (API-05)", "reason": "Post-MVP, 생성하지 않음" }
+  ],
+  "required_navigation": [
+    { "from": "SCR-001", "to": "SCR-002", "trigger": "진단하기 제출 성공", "type": "route" },
+    { "from": "SCR-002", "to": "SCR-002", "trigger": "근거 보기", "type": "drawer" },
+    { "from": "SCR-002", "to": "SCR-003", "trigger": "추천 확인하기", "type": "route" },
+    { "from": "SCR-002", "to": "SCR-004", "trigger": "희망 직무로 구인 사이트 찾기", "type": "route" },
+    { "from": "SCR-002", "to": "SCR-001", "trigger": "다른 정보로 다시 진단하기", "type": "route" },
+    { "from": "SCR-003", "to": "SCR-002", "trigger": "결과로 돌아가기", "type": "route" },
+    { "from": "SCR-003", "to": "SCR-001", "trigger": "다시 진단하기", "type": "route" },
+    { "from": "SCR-004", "to": "SCR-002", "trigger": "진단 결과로 돌아가기", "type": "route" },
+    { "from": "SCR-004", "to": "SCR-001", "trigger": "다시 진단하기", "type": "route" },
+    { "from": "SCR-004", "to": "external", "trigger": "희망 직무로 검색하기", "type": "external_new_tab" },
+    { "from": "SCR-005", "to": "SCR-001", "trigger": "핵심 역량 진단 시작하기", "type": "route" },
+    { "from": "SCR-002", "to": "SCR-001", "trigger": "진단 미완료 접근 경고 CTA(SCR-002~004 공통)", "type": "route" },
+    { "from": "HEADER", "to": "SCR-001", "trigger": "탭: 진단 입력 / 진단 시작하기 버튼", "type": "route" },
+    { "from": "HEADER", "to": "SCR-002", "trigger": "탭: 역량리포트", "type": "route" },
+    { "from": "HEADER", "to": "SCR-003", "trigger": "탭: 직업훈련 추천", "type": "route" },
+    { "from": "HEADER", "to": "SCR-004", "trigger": "탭: 직무추천", "type": "route" },
+    { "from": "HEADER", "to": "SCR-005", "trigger": "탭: 직무수행태도 진단", "type": "route" }
+  ],
+  "validation": {
+    "screen_count": 5,
+    "core_count": 4,
+    "supporting_count": 1,
+    "unique_routes": true,
+    "unique_page_entries": true
+  }
+}

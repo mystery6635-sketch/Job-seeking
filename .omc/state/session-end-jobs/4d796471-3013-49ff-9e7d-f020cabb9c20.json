@@ -1,0 +1,220 @@
+{
+  "version": 1,
+  "jobId": "926fd875-4e76-4e55-9057-12a9fd562b54",
+  "sessionId": "4d796471-3013-49ff-9e7d-f020cabb9c20",
+  "scopeKey": "534b909b0490fbfa1bdda8646432b5e0c523834cca193aa8ddb9edc77a5c9636",
+  "revision": 1,
+  "createdAt": "2026-10-03T10:25:39.045Z",
+  "updatedAt": "2026-10-03T10:25:39.088Z",
+  "producerGraceExpiresAt": "2026-10-03T10:26:09.046Z",
+  "bestEffortDeadlineAt": "2026-10-03T10:27:00.046Z",
+  "producers": {
+    "core": {
+      "state": "prepared",
+      "intentKey": "959367a6c3c7f9b065459268880cbefb9cab99b3ebbd0b109c7b3da46fe7aab4",
+      "payloadDigest": "959367a6c3c7f9b065459268880cbefb9cab99b3ebbd0b109c7b3da46fe7aab4"
+    },
+    "wiki": {
+      "state": "no-op",
+      "sealedAt": "2026-10-03T10:25:39.088Z",
+      "sealedBy": "wiki-producer"
+    }
+  },
+  "actions": {
+    "foreground-cleanup": {
+      "class": "required",
+      "phase": "deferred-required",
+      "status": "pending",
+      "attempts": 0,
+      "idempotencyKey": "9ca40dda126af69f3e8135b42dd2ab3c896a40e1474753f480174195e359a923",
+      "payload": {
+        "transcriptPath": "C:\\Users\\gram15\\.claude\\projects\\C--AI-SERVICE-Job-app\\4d796471-3013-49ff-9e7d-f020cabb9c20.jsonl",
+        "cwd": "C:\\AI_SERVICE\\Job\\app",
+        "reason": "other",
+        "input": {
+          "session_id": "4d796471-3013-49ff-9e7d-f020cabb9c20",
+          "transcript_path": "C:\\Users\\gram15\\.claude\\projects\\C--AI-SERVICE-Job-app\\4d796471-3013-49ff-9e7d-f020cabb9c20.jsonl",
+          "cwd": "C:\\AI_SERVICE\\Job\\app",
+          "scratchpad_dir": "C:\\Users\\gram15\\AppData\\Local\\Temp\\claude\\C--AI-SERVICE-Job-app\\4d796471-3013-49ff-9e7d-f020cabb9c20\\scratchpad",
+          "prompt_id": "a9b4a39f-f8c7-44a8-8398-24def63e9963",
+          "hook_event_name": "SessionEnd",
+          "reason": "other"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {}
+      },
+      "budgetMs": 9000
+    },
+    "wiki-capture": {
+      "class": "required",
+      "phase": "deferred-required",
+      "status": "completed",
+      "attempts": 0,
+      "idempotencyKey": "47dc93e5b8235b955cbca690edf009f451ae21ac7c95674751c95e8588cce21b",
+      "payload": {
+        "transcriptPath": "C:\\Users\\gram15\\.claude\\projects\\C--AI-SERVICE-Job-app\\4d796471-3013-49ff-9e7d-f020cabb9c20.jsonl",
+        "cwd": "C:\\AI_SERVICE\\Job\\app",
+        "reason": "other",
+        "input": {
+          "session_id": "4d796471-3013-49ff-9e7d-f020cabb9c20",
+          "transcript_path": "C:\\Users\\gram15\\.claude\\projects\\C--AI-SERVICE-Job-app\\4d796471-3013-49ff-9e7d-f020cabb9c20.jsonl",
+          "cwd": "C:\\AI_SERVICE\\Job\\app",
+          "scratchpad_dir": "C:\\Users\\gram15\\AppData\\Local\\Temp\\claude\\C--AI-SERVICE-Job-app\\4d796471-3013-49ff-9e7d-f020cabb9c20\\scratchpad",
+          "prompt_id": "a9b4a39f-f8c7-44a8-8398-24def63e9963",
+          "hook_event_name": "SessionEnd",
+          "reason": "other"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {}
+      },
+      "budgetMs": 9000,
+      "completedAt": "2026-10-03T10:25:39.088Z"
+    },
+    "team-cleanup": {
+      "class": "required",
+      "phase": "deferred-required",
+      "status": "pending",
+      "attempts": 0,
+      "idempotencyKey": "c106b23250660eb347202b59d8a519510442b1905a31929d3ce7e5ffb78e9438",
+      "payload": {
+        "transcriptPath": "C:\\Users\\gram15\\.claude\\projects\\C--AI-SERVICE-Job-app\\4d796471-3013-49ff-9e7d-f020cabb9c20.jsonl",
+        "cwd": "C:\\AI_SERVICE\\Job\\app",
+        "reason": "other",
+        "input": {
+          "session_id": "4d796471-3013-49ff-9e7d-f020cabb9c20",
+          "transcript_path": "C:\\Users\\gram15\\.claude\\projects\\C--AI-SERVICE-Job-app\\4d796471-3013-49ff-9e7d-f020cabb9c20.jsonl",
+          "cwd": "C:\\AI_SERVICE\\Job\\app",
+          "scratchpad_dir": "C:\\Users\\gram15\\AppData\\Local\\Temp\\claude\\C--AI-SERVICE-Job-app\\4d796471-3013-49ff-9e7d-f020cabb9c20\\scratchpad",
+          "prompt_id": "a9b4a39f-f8c7-44a8-8398-24def63e9963",
+          "hook_event_name": "SessionEnd",
+          "reason": "other"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {}
+      },
+      "budgetMs": 9000
+    },
+    "python-cleanup": {
+      "class": "required",
+      "phase": "deferred-required",
+      "status": "pending",
+      "attempts": 0,
+      "idempotencyKey": "7821bf3babd5925007eeddc0da96eaf01857b81cea6ff1130ddf3023ded3af18",
+      "payload": {
+        "transcriptPath": "C:\\Users\\gram15\\.claude\\projects\\C--AI-SERVICE-Job-app\\4d796471-3013-49ff-9e7d-f020cabb9c20.jsonl",
+        "cwd": "C:\\AI_SERVICE\\Job\\app",
+        "reason": "other",
+        "input": {
+          "session_id": "4d796471-3013-49ff-9e7d-f020cabb9c20",
+          "transcript_path": "C:\\Users\\gram15\\.claude\\projects\\C--AI-SERVICE-Job-app\\4d796471-3013-49ff-9e7d-f020cabb9c20.jsonl",
+          "cwd": "C:\\AI_SERVICE\\Job\\app",
+          "scratchpad_dir": "C:\\Users\\gram15\\AppData\\Local\\Temp\\claude\\C--AI-SERVICE-Job-app\\4d796471-3013-49ff-9e7d-f020cabb9c20\\scratchpad",
+          "prompt_id": "a9b4a39f-f8c7-44a8-8398-24def63e9963",
+          "hook_event_name": "SessionEnd",
+          "reason": "other"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {}
+      },
+      "budgetMs": 9000
+    },
+    "reply-cleanup": {
+      "class": "required",
+      "phase": "deferred-required",
+      "status": "pending",
+      "attempts": 0,
+      "idempotencyKey": "8a4e4705179b34597dc23972daf5a697d527bc9d618e0af8ca4196e21fa447a5",
+      "payload": {
+        "transcriptPath": "C:\\Users\\gram15\\.claude\\projects\\C--AI-SERVICE-Job-app\\4d796471-3013-49ff-9e7d-f020cabb9c20.jsonl",
+        "cwd": "C:\\AI_SERVICE\\Job\\app",
+        "reason": "other",
+        "input": {
+          "session_id": "4d796471-3013-49ff-9e7d-f020cabb9c20",
+          "transcript_path": "C:\\Users\\gram15\\.claude\\projects\\C--AI-SERVICE-Job-app\\4d796471-3013-49ff-9e7d-f020cabb9c20.jsonl",
+          "cwd": "C:\\AI_SERVICE\\Job\\app",
+          "scratchpad_dir": "C:\\Users\\gram15\\AppData\\Local\\Temp\\claude\\C--AI-SERVICE-Job-app\\4d796471-3013-49ff-9e7d-f020cabb9c20\\scratchpad",
+          "prompt_id": "a9b4a39f-f8c7-44a8-8398-24def63e9963",
+          "hook_event_name": "SessionEnd",
+          "reason": "other"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {}
+      },
+      "budgetMs": 9000
+    },
+    "callback": {
+      "class": "best-effort",
+      "phase": "deferred-best-effort",
+      "status": "pending",
+      "attempts": 0,
+      "idempotencyKey": "5f0059755c3787b3ac01e184044085339770ce1a9920d86632ae96154f5a695b",
+      "payload": {
+        "transcriptPath": "C:\\Users\\gram15\\.claude\\projects\\C--AI-SERVICE-Job-app\\4d796471-3013-49ff-9e7d-f020cabb9c20.jsonl",
+        "cwd": "C:\\AI_SERVICE\\Job\\app",
+        "reason": "other",
+        "input": {
+          "session_id": "4d796471-3013-49ff-9e7d-f020cabb9c20",
+          "transcript_path": "C:\\Users\\gram15\\.claude\\projects\\C--AI-SERVICE-Job-app\\4d796471-3013-49ff-9e7d-f020cabb9c20.jsonl",
+          "cwd": "C:\\AI_SERVICE\\Job\\app",
+          "scratchpad_dir": "C:\\Users\\gram15\\AppData\\Local\\Temp\\claude\\C--AI-SERVICE-Job-app\\4d796471-3013-49ff-9e7d-f020cabb9c20\\scratchpad",
+          "prompt_id": "a9b4a39f-f8c7-44a8-8398-24def63e9963",
+          "hook_event_name": "SessionEnd",
+          "reason": "other"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {}
+      },
+      "budgetMs": 2000
+    },
+    "notification": {
+      "class": "best-effort",
+      "phase": "deferred-best-effort",
+      "status": "pending",
+      "attempts": 0,
+      "idempotencyKey": "e4cf8f0be4d2437fda0b6fca33e5115fcbcb8003298f10e36424174087b94b64",
+      "payload": {
+        "transcriptPath": "C:\\Users\\gram15\\.claude\\projects\\C--AI-SERVICE-Job-app\\4d796471-3013-49ff-9e7d-f020cabb9c20.jsonl",
+        "cwd": "C:\\AI_SERVICE\\Job\\app",
+        "reason": "other",
+        "input": {
+          "session_id": "4d796471-3013-49ff-9e7d-f020cabb9c20",
+          "transcript_path": "C:\\Users\\gram15\\.claude\\projects\\C--AI-SERVICE-Job-app\\4d796471-3013-49ff-9e7d-f020cabb9c20.jsonl",
+          "cwd": "C:\\AI_SERVICE\\Job\\app",
+          "scratchpad_dir": "C:\\Users\\gram15\\AppData\\Local\\Temp\\claude\\C--AI-SERVICE-Job-app\\4d796471-3013-49ff-9e7d-f020cabb9c20\\scratchpad",
+          "prompt_id": "a9b4a39f-f8c7-44a8-8398-24def63e9963",
+          "hook_event_name": "SessionEnd",
+          "reason": "other"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {}
+      },
+      "budgetMs": 2000
+    },
+    "openclaw": {
+      "class": "best-effort",
+      "phase": "deferred-best-effort",
+      "status": "pending",
+      "attempts": 0,
+      "idempotencyKey": "f0db5f4f09adb6e855de376070b425b2be05e19ed6f1a6c7e0601dd5031b2a44",
+      "payload": {
+        "transcriptPath": "C:\\Users\\gram15\\.claude\\projects\\C--AI-SERVICE-Job-app\\4d796471-3013-49ff-9e7d-f020cabb9c20.jsonl",
+        "cwd": "C:\\AI_SERVICE\\Job\\app",
+        "reason": "other",
+        "input": {
+          "session_id": "4d796471-3013-49ff-9e7d-f020cabb9c20",
+          "transcript_path": "C:\\Users\\gram15\\.claude\\projects\\C--AI-SERVICE-Job-app\\4d796471-3013-49ff-9e7d-f020cabb9c20.jsonl",
+          "cwd": "C:\\AI_SERVICE\\Job\\app",
+          "scratchpad_dir": "C:\\Users\\gram15\\AppData\\Local\\Temp\\claude\\C--AI-SERVICE-Job-app\\4d796471-3013-49ff-9e7d-f020cabb9c20\\scratchpad",
+          "prompt_id": "a9b4a39f-f8c7-44a8-8398-24def63e9963",
+          "hook_event_name": "SessionEnd",
+          "reason": "other"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {}
+      },
+      "budgetMs": 2000
+    }
+  },
+  "owner": null,
+  "phase": "collecting"
+}

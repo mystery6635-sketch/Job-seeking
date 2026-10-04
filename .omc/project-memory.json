@@ -1,0 +1,179 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1791015655121,
+  "projectRoot": "C:\\AI_SERVICE\\Job\\app",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      },
+      {
+        "name": "TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "tsconfig.json"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "next",
+        "version": "16.3.5",
+        "category": "fullstack"
+      },
+      {
+        "name": "react",
+        "version": "19.2.8",
+        "category": "frontend"
+      },
+      {
+        "name": "react-dom",
+        "version": "19.2.8",
+        "category": "frontend"
+      }
+    ],
+    "packageManager": "npm",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": "npm run build",
+    "testCommand": null,
+    "lintCommand": "npm run lint",
+    "devCommand": "npm run dev",
+    "scripts": {
+      "dev": "next dev",
+      "build": "next build",
+      "start": "next start",
+      "lint": "eslint"
+    }
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "docs",
+      "public",
+      "src"
+    ],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "design-reference": {
+      "path": "design-reference",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1791015655040,
+      "keyFiles": []
+    },
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 5,
+      "lastAccessed": 1791015655041,
+      "keyFiles": [
+        "01_PRD.md",
+        "02_SRS_BASELINE.md",
+        "03_UI_COVERAGE_ANALYSIS.md",
+        "04_UIUX_PLAN.md",
+        "PROJECT_SCOPE.md"
+      ]
+    },
+    "public": {
+      "path": "public",
+      "purpose": "Public files",
+      "fileCount": 5,
+      "lastAccessed": 1791015655053,
+      "keyFiles": [
+        "file.svg",
+        "globe.svg",
+        "next.svg",
+        "vercel.svg",
+        "window.svg"
+      ]
+    },
+    "src": {
+      "path": "src",
+      "purpose": "Source code",
+      "fileCount": 0,
+      "lastAccessed": 1791015655054,
+      "keyFiles": []
+    },
+    "design-reference\\vendor": {
+      "path": "design-reference\\vendor",
+      "purpose": "Third-party code",
+      "fileCount": 0,
+      "lastAccessed": 1791015655055,
+      "keyFiles": []
+    },
+    "src\\app": {
+      "path": "src\\app",
+      "purpose": "Application code",
+      "fileCount": 4,
+      "lastAccessed": 1791015655056,
+      "keyFiles": [
+        "favicon.ico",
+        "globals.css",
+        "layout.tsx"
+      ]
+    },
+    "src\\data": {
+      "path": "src\\data",
+      "purpose": "Data files",
+      "fileCount": 0,
+      "lastAccessed": 1791015655057,
+      "keyFiles": []
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "docs/02_SRS_BASELINE.md",
+      "accessCount": 18,
+      "lastAccessed": 1791018626926,
+      "type": "file"
+    },
+    {
+      "path": "docs/PROJECT_SCOPE.md",
+      "accessCount": 8,
+      "lastAccessed": 1791018655534,
+      "type": "file"
+    },
+    {
+      "path": "docs/03_UI_COVERAGE_ANALYSIS.md",
+      "accessCount": 8,
+      "lastAccessed": 1791018682623,
+      "type": "file"
+    },
+    {
+      "path": "docs/04_UIUX_PLAN.md",
+      "accessCount": 6,
+      "lastAccessed": 1791018710735,
+      "type": "file"
+    },
+    {
+      "path": "design-reference/vendor/jobfit/DESIGN.md",
+      "accessCount": 4,
+      "lastAccessed": 1791018079933,
+      "type": "file"
+    },
+    {
+      "path": "docs/STITCH_VALIDATION_REPORT.md",
+      "accessCount": 1,
+      "lastAccessed": 1791022703742,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}
